@@ -266,7 +266,8 @@ func TestService_Reconcile(t *testing.T) {
 					Image: &infrav1.Image{
 						ID: to.StringPtr("image"),
 					},
-					CustomData: "customData",
+					CustomData:     "customData",
+					FailureDomains: []string{"1"},
 				}
 			},
 			Setup: func(ctx context.Context, g *gomega.GomegaWithT, svc *Service, scope *scope.ClusterScope, mpScope *scope.MachinePoolScope, spec *Spec) {
@@ -340,6 +341,7 @@ func TestService_Reconcile(t *testing.T) {
 							},
 						},
 					},
+					Zones: to.StringSlicePtr(spec.FailureDomains),
 				}
 
 				skusMock.EXPECT().HasAcceleratedNetworking(gomock.Any(), gomock.Any()).Return(false, nil)
@@ -372,7 +374,8 @@ func TestService_Reconcile(t *testing.T) {
 					Image: &infrav1.Image{
 						ID: to.StringPtr("image"),
 					},
-					CustomData: "customData",
+					CustomData:     "customData",
+					FailureDomains: []string{"1"},
 				}
 			},
 			Setup: func(ctx context.Context, g *gomega.GomegaWithT, svc *Service, scope *scope.ClusterScope, mpScope *scope.MachinePoolScope, spec *Spec) {
@@ -446,6 +449,7 @@ func TestService_Reconcile(t *testing.T) {
 							},
 						},
 					},
+					Zones: to.StringSlicePtr(spec.FailureDomains),
 				}
 
 				skusMock.EXPECT().HasAcceleratedNetworking(gomock.Any(), gomock.Any()).Return(true, nil)
